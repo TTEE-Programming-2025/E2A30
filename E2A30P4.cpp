@@ -4,6 +4,18 @@
 #include <string.h>
 #include <ctype.h>
 
+typedef struct
+{
+    char name[50];
+    int id;
+    int math;
+    int physics;
+    int english;
+    float average;
+} Student;
+
+Student students[10];
+int student_count = 0; 
 void menu()
 {
     printf("------------[Grade System]----------\n");
@@ -14,22 +26,12 @@ void menu()
     printf("| e. Exit system                  |\n");
     printf("------------------------------------\n");
 }
-typedef struct
-{
-    char name[50];
-    int id;
-    int math;
-    int physics;
-    int english;
-    float average;
-} Student;
+
 void enter_grades()
 {
     int n;
-    int student_count = 0;
     char name[100];
     char id_input[20];
-    Student students[10];
     printf("Enter number of Students(5-10):");
     scanf("%d", &n);
     while (n < 5 || n > 10)
@@ -44,14 +46,15 @@ void enter_grades()
     {
         printf("\n enter students %d name :", i + 1);
         getchar();
-        fgets(students[i].name, 100, stdin);//使用fgets是因為scanf無法讀取整行字串以及空格
-        while (1) {   // 檢查學生 ID 是否為六位數
+        fgets(students[i].name, 100, stdin); // 使用fgets是因為scanf無法讀取整行字串以及空格
+        while (1)
+        { // 檢查學生 ID 是否為六位數
             printf("Enter student ID (6 digits): ");
             scanf("%d", &students[i].id);
             // 檢查是否為數字且位數為 6
             if (students[i].id >= 100000 && students[i].id <= 999999)
             {
-                break; 
+                break;
             }
             else
             {
@@ -59,19 +62,17 @@ void enter_grades()
             }
         }
 
-
         printf("Enter Math score: ");
         scanf("%d", &students[i].math);
-        if( students[i].math < 0 || students[i].math >100)
+        if (students[i].math < 0 || students[i].math > 100)
         {
             printf("Please enter actual score:");
             scanf("%d", &students[i].math);
-
         }
 
         printf("Enter Physics score: ");
         scanf("%d", &students[i].physics);
-        if(students[i].physics<0 || students[i].physics<100)
+        if (students[i].physics < 0 || students[i].physics < 100)
         {
             printf("Please enter actual score:");
             scanf("%d", &students[i].physics);
@@ -79,16 +80,28 @@ void enter_grades()
 
         printf("Enter English score: ");
         scanf("%d", &students[i].english);
-        if(students[i].english<0 || students[i].english>100)
+        if (students[i].english < 0 || students[i].english > 100)
         {
             printf("Please enter actual score:");
             scanf("%d", &students[i].english);
         }
-        }
     }
+}
+void display_grades(Student students[], int student_count)
+{
+    printf("\nName    ID      Math  Physics  English  Average\n");
+    for (int i = 0; i < student_count; i++)
+    {
+        float average = (students[i].math + students[i].physics + students[i].english) / 3.0;
+        printf("%s %d %d %d %d %.1f\n",
+               students[i].name, students[i].id, students[i].math,
+               students[i].physics, students[i].english, average);
+    }
+}
 
 int main(void)
 {
+    int student_count = 0;
     system("chcp 65001");
     puts("==========================================================================");
     puts("                    Welcome to Your Personalized UI!                     ");
@@ -154,11 +167,13 @@ int main(void)
         switch (choice)
         {
         case 'a':
+            system("clear");
             enter_grades();
             break;
         case 'b':
-
-            
+            system("clear");
+            display_grades(students, student_count);
+            break;
         }
     }
 }
