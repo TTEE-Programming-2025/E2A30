@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 
 void menu()
 {
@@ -27,12 +28,13 @@ void enter_grades()
     int n;
     int student_count = 0;
     char name[100];
+    char id_input[20];
     Student students[10];
     printf("Enter number of Students(5-10):");
     scanf("%d", &n);
     while (n < 5 || n > 10)
     {
-        printf("Please enter a number between 5~10");
+        printf("Please enter a number between 5~10:");
         scanf("%d", &n);
     }
     student_count = n;
@@ -43,8 +45,20 @@ void enter_grades()
         printf("\n enter students %d name :", i + 1);
         getchar();
         fgets(students[i].name, 100, stdin);//使用fgets是因為scanf無法讀取整行字串以及空格
-        printf("enter student ID(6 digits):");
-        scanf("%d", &students[i].id);
+        while (1) {   // 檢查學生 ID 是否為六位數
+            printf("Enter student ID (6 digits): ");
+            scanf("%d", &students[i].id);
+            // 檢查是否為數字且位數為 6
+            if (students[i].id >= 100000 && students[i].id <= 999999)
+            {
+                break; 
+            }
+            else
+            {
+                printf("ID must be exactly 6 digits!\n");
+            }
+        }
+
 
         printf("Enter Math score: ");
         scanf("%d", &students[i].math);
@@ -143,6 +157,7 @@ int main(void)
             enter_grades();
             break;
         case 'b':
+
             
         }
     }
