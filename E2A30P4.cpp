@@ -172,6 +172,31 @@ void rank_students(Student students[], int student_count)
     getchar();
 }
 
+void exit_system()
+{
+    char confirm;
+    while (1)
+    {
+        printf("\nAre you sure you want to exit? (y/n): ");
+        scanf(" %c", &confirm);
+
+        if (confirm == 'y' || confirm == 'Y')
+        {
+            printf("Exiting system...\n");
+            exit(0);
+        }
+        else if (confirm == 'n' || confirm == 'N')
+        {
+            printf("Returning to main menu...\n");
+            break;
+        }
+        else
+        {
+            printf("Invalid input. Please enter 'y' or 'n'.\n");
+        }
+    }
+}
+
 int main(void)
 {
     int student_count = 0;
@@ -254,8 +279,10 @@ int main(void)
             rank_students(students, student_count);
             break;
         case 'e':
-            printf("Exiting system.\n");
-            return 0;
+            exit_system();
+            break;
         }
     }
-}
+}/*在這次程式設計中，我學習到如何將程式劃分為不同的模組，並透過函式來進行封裝，使整體程式結構更加清晰。在排序功能中，我理解了冒泡排序的基本原理，同時發現了其效率瓶頸。
+此外，在搜尋功能中，我學習到如何使用 strcmp() 進行字串比對，並注意到輸入時 \n 符號可能導致比對失敗，這也教會我如何有效處理緩衝區中的換行符。
+*/
