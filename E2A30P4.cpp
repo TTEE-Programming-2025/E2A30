@@ -160,9 +160,8 @@ int main(void)
         system("clear");
         menu();
         printf("Please enter your choice:");
-        getchar();
-        scanf("%c", &choice);
-        getchar(); // 清空緩存
+        scanf(" %c", &choice);
+
 
         switch (choice)
         {
