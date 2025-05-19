@@ -116,6 +116,7 @@ int main(void)
         system("clear");
         menu();
         printf("Please enter your choice:");
+        getchar();
         scanf("%c", &choice);
         getchar(); // 清空緩存
 
@@ -123,6 +124,9 @@ int main(void)
         {
         case 'a':
             enter_grades();
+            break;
+        case 'b':
+            
         }
     }
 }
