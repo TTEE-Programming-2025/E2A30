@@ -3,6 +3,15 @@
 #include <stdbool.h>
 #include <string.h>
 
+typedef struct
+{
+    char name[50];
+    int id;
+    int math;
+    int physics;
+    int english;
+    float average;
+} Student;
 void menu()
 {
     printf("------------[Grade System]----------\n");
@@ -12,6 +21,40 @@ void menu()
     printf("| d. Grade ranking                |\n");
     printf("| e. Exit system                  |\n");
     printf("------------------------------------\n");
+}
+void enter_grades()
+{
+
+    int n;
+    int student_count = 0;
+    char name[100];
+    Student students[10];
+    printf("Enter number of Students(5~10):", );
+    scanf("%d", &n);
+    while (n < 5 || n > 10)
+    {
+        printf("Please enter a number between 5~10");
+        scanf("%d", &n);
+    }
+    student_count = n;
+
+    getchar();
+    for (int i = 0; i < student_count; i++)
+    {
+        printf("\n enter students %d name :", i + 1);
+        fgets(students[i].name, 50, stdin);//使用fgets是因為scanf無法讀取整行字串以及空格
+        printf("enter student ID(6 digits):");
+        scanf("%d", &students[i].id);
+
+        printf("Enter Math score: ");
+        scanf("%d", &students[i].math);
+
+        printf("Enter Physics score: ");
+        scanf("%d", &students[i].physics);
+
+        printf("Enter English score: ");
+        scanf("%d", &students[i].english);
+    }
 }
 int main(void)
 {
@@ -74,13 +117,13 @@ int main(void)
         menu();
         printf("Please enter your choice:");
         scanf("%d", &choice);
-        getchar(); //清空緩存
+        getchar(); // 清空緩存
 
-        switch(choice)
+        switch (choice)
         {
-            case 'a':
-            
+        case 'a':
+            printf("Enter grades...\n");
+            enter_grades();
         }
-
     }
 }
