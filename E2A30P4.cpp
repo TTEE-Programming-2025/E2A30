@@ -3,7 +3,17 @@
 #include <stdbool.h>
 #include <string.h>
 
-int main(void) 
+void menu()
+{
+    printf("------------[Grade System]----------\n");
+    printf("| a. Enter student grades         |\n");
+    printf("| b. Display student grades       |\n");
+    printf("| c. Search for student grades    |\n");
+    printf("| d. Grade ranking                |\n");
+    printf("| e. Exit system                  |\n");
+    printf("------------------------------------\n");
+}
+int main(void)
 {
     system("chcp 65001");
     puts("==========================================================================");
@@ -36,27 +46,41 @@ int main(void)
     puts(word);
 
     int password, attempts = 3;
-    while (attempts > 0) 
+    while (attempts > 0)
     {
         printf("enter the four digit password: ");
         scanf("%d", &password);
-        if (password == 2025) 
+        if (password == 2025)
         {
             printf("password id correct! Welcome!\n");
             break;
-        } 
-        else 
+        }
+        else
         {
             printf("Wrong Password\n");
             attempts--;
-        
-        if (attempts == 0) 
-        {
-            printf("Wrong password three times !\a");
-            return 0;
+
+            if (attempts == 0)
+            {
+                printf("Wrong password three times !\a");
+                return 0;
+            }
         }
     }
+    char choice;
+    while (1)
+    {
+        system("clear");
+        menu();
+        printf("Please enter your choice:");
+        scanf("%d", &choice);
+        getchar(); //清空緩存
 
-    
+        switch(choice)
+        {
+            case 'a':
+            
+        }
+
     }
 }
