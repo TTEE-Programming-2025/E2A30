@@ -15,7 +15,7 @@ typedef struct
 } Student;
 
 Student students[10];
-int student_count = 0; 
+int student_count = 0;
 void menu()
 {
     printf("------------[Grade System]----------\n");
@@ -72,7 +72,7 @@ void enter_grades()
 
         printf("Enter Physics score: ");
         scanf("%d", &students[i].physics);
-        if (students[i].physics < 0 || students[i].physics < 100)
+        if (students[i].physics < 0 || students[i].physics > 100)
         {
             printf("Please enter actual score:");
             scanf("%d", &students[i].physics);
@@ -97,6 +97,79 @@ void display_grades(Student students[], int student_count)
                students[i].name, students[i].id, students[i].math,
                students[i].physics, students[i].english, average);
     }
+    printf("\nPress Enter to continue...");
+    getchar();
+    getchar(); // 兩次 getchar() 是為了確保讀取換行符
+}
+
+void search_student(Student students[], int student_count)
+{
+    char search_name[50];
+    printf("Enter student name to search: ");
+    getchar();  // 清除緩衝區中的換行符
+    fgets(search_name, 50, stdin);
+    search_name[strcspn(search_name, "\n")] = '\0';  // 移除換行符號
+
+    int found = 0;
+    for (int i = 0; i < student_count; i++)
+    {
+        if (strcmp(students[i].name, search_name) == 0)
+        {
+            float average = (students[i].math + students[i].physics + students[i].english) / 3.0;
+            printf("\nName: %s\nID: %d\nMath: %d\nPhysics: %d\nEnglish: %d\nAverage: %.1f\n",
+                   students[i].name, students[i].id, students[i].math,
+                   students[i].physics, students[i].english, average);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        printf("Student not found.\n");
+    }
+
+    printf("\nPress Enter to continue...");
+    getchar();
+}
+
+void rank_students(Student students[], int student_count)
+{
+    // 建立副本，避免修改原始資料
+    Student sorted_students[10];
+    memcpy(sorted_students, students, sizeof(Student) * student_count);
+
+    // 冒泡排序，依照平均分數從高到低排序
+    for (int i = 0; i < student_count - 1; i++)
+    {
+        for (int j = 0; j < student_count - i - 1; j++)
+        {
+            float avg1 = (sorted_students[j].math + sorted_students[j].physics + sorted_students[j].english) / 3.0;
+            float avg2 = (sorted_students[j + 1].math + sorted_students[j + 1].physics + sorted_students[j + 1].english) / 3.0;
+
+            if (avg1 < avg2)  // 若前者平均分數小於後者，交換順序
+            {
+                Student temp = sorted_students[j];
+                sorted_students[j] = sorted_students[j + 1];
+                sorted_students[j + 1] = temp;
+            }
+        }
+    }
+
+    // 顯示排序後的成績
+    printf("\nRanking by Average Score:\n");
+    printf("Name    ID      Math  Physics  English  Average\n");
+    for (int i = 0; i < student_count; i++)
+    {
+        float average = (sorted_students[i].math + sorted_students[i].physics + sorted_students[i].english) / 3.0;
+        printf("%s %d %d %d %d %.1f\n",
+               sorted_students[i].name, sorted_students[i].id, sorted_students[i].math,
+               sorted_students[i].physics, sorted_students[i].english, average);
+    }
+
+    printf("\nPress Enter to continue...");
+    getchar();
+    getchar();
 }
 
 int main(void)
@@ -162,7 +235,6 @@ int main(void)
         printf("Please enter your choice:");
         scanf(" %c", &choice);
 
-
         switch (choice)
         {
         case 'a':
@@ -173,6 +245,17 @@ int main(void)
             system("clear");
             display_grades(students, student_count);
             break;
+        case 'c':
+            system("clear");
+            search_student(students, student_count);
+            break;
+        case 'd':
+            system("clear");
+            rank_students(students, student_count);
+            break;
+        case 'e':
+            printf("Exiting system.\n");
+            return 0;
         }
     }
 }
