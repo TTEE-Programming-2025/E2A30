@@ -48,14 +48,31 @@ void enter_grades()
 
         printf("Enter Math score: ");
         scanf("%d", &students[i].math);
+        if( students[i].math < 0 || students[i].math >100)
+        {
+            printf("Please enter actual score:");
+            scanf("%d", &students[i].math);
+
+        }
 
         printf("Enter Physics score: ");
         scanf("%d", &students[i].physics);
+        if(students[i].physics<0 || students[i].physics<100)
+        {
+            printf("Please enter actual score:");
+            scanf("%d", &students[i].physics);
+        }
 
         printf("Enter English score: ");
         scanf("%d", &students[i].english);
+        if(students[i].english<0 || students[i].english>100)
+        {
+            printf("Please enter actual score:");
+            scanf("%d", &students[i].english);
+        }
+        }
     }
-}
+
 int main(void)
 {
     system("chcp 65001");
